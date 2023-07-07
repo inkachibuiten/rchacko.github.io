@@ -173,7 +173,7 @@
       <p>To date, the Vendée Globe is the greatest sailing race round the world, solo, non-stop and without assistance, various sailors travel the seas. The competitors undertake a circum navigation via the three capes (Good Hope, Leeuwin and Horn). The Vendee Globe is now called the Everest of the seas and is an extraordinary race.The 9th edition of the Vendee Globe was held in 2020-2021 and was won by French sailor Yannick Bestaven who took slightly over 80 days to sail non-stop around the globe. During the race, spectators could follow the action live on an online racing dashboard</p>
 <p>In order to visualise this race, I created a Lambda architecture. A real-time stream to display the current location of the sailors at all time. And a batch layer to calculate rankings, total kilometers travelled, average speed, and so on.</p>
 <figure>
-    <img src="/images/architecture.png"/> 
+    <img src="https://inkachibuiten.github.io/rchacko.github.io/images/architecture.png"/> 
 </figure>
 <p><b>Project Requirements:</b></p>
 <p>The boats leave from South of Portugal. They head south-east around the globe, sending data about their location every 60 seconds.</p>
@@ -199,9 +199,7 @@
   <p><b>How did I acheive this?</b></p>
 
   <figure>
-  <!-- <img src="/images/azurearchitecture.png"/> -->
-	  <img src="https://rchacko.github.io/images/azurearchitecture.png"/>
-	  
+    <img src="https://inkachibuiten.github.io/rchacko.github.io/images/azurearchitecture.png"/> 
 </figure>
 
 <p>Started off looking at various options and decided on the following architecture</p>
@@ -212,22 +210,22 @@
 <P>A Power BI dashboard for displaying both real time and batch data</P>
 
 <figure>
-  <img src="/images/steps.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/steps.png"/> 
 </figure>
 
 <figure>
-  <img src="/images/environment.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/environment.png"/> 
 </figure>
 
 <figure>
-  <img src="/images/generator.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/generator.png"/> 
 </figure>
 <figure>
-  <img src="/images/eventhub.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/eventhub.png"/> 
 </figure>
 
 <figure>
-  <img src="/images/outputs.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/outputs.png"/> 
 </figure>
 
 <p>In Azure Stream Analytics we created a streaming job with two outputs</p>
@@ -235,7 +233,7 @@
 <p>boatlocationstream is our real time stream to Power BI service.In Power BI I used RouteMap visualisation to display the real time location and route taken for each boat</p>
 
 <figure>
-  <img src="/images/queryoutputs.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/queryoutputs.png"/> 
 </figure>
 
 <p>Each output required a query and it is here that I handled the invalid data that was been streamed. As you can see from this screen both queries exclude any rows with invalid longitute or latitude values.</p>
@@ -243,24 +241,24 @@
 <p>For the batch stream to ADLS Gen2 I also had to CAST the values as some values where been stored as Integers and were causing issues when I imported the data to Power Bi desktop. TRY_CAST function , which is similar to the CAST Function, is used to convert an expression from one data type to another. If it succeeds, then SQL TRY CAST will return the expression in the desired data type. Otherwise, it will return null. Its for this reason we then only select rows that are not null</p>
 
 <figure>
-  <img src="/images/batch.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/batch.png"/> 
 </figure>
 
 <p>In Synapse I created an external table using serverless pools. Serverless pools where used as they are low cost solution and allowed us to integrate easily to Power Bi Desktop</p>
 <figure>
-  <img src="/images/stats.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/stats.png"/> 
 </figure>
 
 <p>Using this external table  then created a view to get speed statistics for each boat. A window row function was used to get the stats for each boat for last 24 hours and previous 24 hours. The query used assumes one message received per minute for each boat. We chose to look at only 48 hours of data as our similator was only running for a few days but if running longer this query could be adjusted to look at weekly or monthly statistics.</Using this external table we then created a view to get speed statistics for each boat. A window row function was used to get the stats for each boat for last 24 hours and previous 24 hours. The query used assumes one message received per minute for each boat. We chose to look at only 48 hours of data as our similator was only running for a few days but if running longer this query could be adjusted to look at weekly or monthly statistics.</p>
 
 <figure>
-  <img src="/images/rank.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/rank.png"/> 
 </figure>
 
 <p>Again using the external table  created a view which was then used to rank the boats. This view uses the average starting point for all boats as the starting position and calculates the distance traveled from this point to their last captured location.</p>
 
 <figure>
-  <img src="/images/measures.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/measures.png"/> 
 </figure>
 
 <p>In Power Bi Desktop we then got this data from Synapse using direct query. Two measures where created</p>
@@ -271,7 +269,7 @@
 <p><b>Completed Dashboard</b></p>
 
 <figure>
-  <img src="/images/dashboardend.png"/> 
+  <img src="https://inkachibuiten.github.io/rchacko.github.io/images/dashboardend.png"/> 
 </figure>
 
 
